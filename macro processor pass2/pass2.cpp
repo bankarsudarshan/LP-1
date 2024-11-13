@@ -106,16 +106,18 @@ int expandMacro(int linenum)
 // Pass 2 to process each line
 void pass2() {
     for (int i = 0; i < ourInputFile.size(); i++) {
-        if (findInMNT(ourInputFile[i][0]) != -1 && ourInputFile[i-1][0] != "MACRO") {
-            // cout << "Macro call found on line " << i << endl;
-            i = expandMacro(i);  // Expand the macro
-        } 
-        else {
-            // Print non-macro lines directly
-            for (const auto& word : ourInputFile[i]) {
-                cout << word << "\t";
+        if(ourInputFile[i][0] == "MACRO") {
+            while(i<ourInputFile.size() && ourInputFile[i][0] != "MEND") {
+                i++;
             }
-            cout << endl;
+        } else if(findInMNT(ourInputFile[i][0]) != -1 && ourInputFile[i-1][0] != "MACRO") {
+            // cout<<"macro call found. macro expansion below"<<endl;
+            i = expandMacro(i);
+        } else {
+            for(int j=0; j<ourInputFile[i].size(); j++) {
+                cout<<ourInputFile[i][j]<<" ";
+            }
+            cout<<endl;
         }
     }
 }

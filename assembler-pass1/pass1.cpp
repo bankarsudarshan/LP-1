@@ -34,7 +34,7 @@ int getId(string opcode) {
             return i;
         }
     }
-    return 1;
+    return -1;
 }
 
 
